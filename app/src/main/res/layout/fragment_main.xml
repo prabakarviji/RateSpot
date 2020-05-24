@@ -5,10 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:fontFamily="@font/metropolis_medium"
+        android:gravity="center"
+        android:text="Loading..."
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
 </FrameLayout>
