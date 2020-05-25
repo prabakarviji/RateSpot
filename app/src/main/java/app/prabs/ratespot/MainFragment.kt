@@ -1,5 +1,6 @@
 package app.prabs.ratespot
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -43,6 +44,8 @@ class MainFragment : Fragment() {
             when(authenticationState){
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     Log.i("Main","Auth")
+                    val intent = Intent (activity, MapsActivity::class.java)
+                    activity?.startActivity(intent)
                 }
                 else -> {
                     Log.i("Main","onAuth")
