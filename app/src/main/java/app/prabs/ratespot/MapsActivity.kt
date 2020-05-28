@@ -2,6 +2,7 @@ package app.prabs.ratespot
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -93,7 +94,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
     }
 
     private fun navigateToRate(){
-        Log.i("Map","Clicked")
+        val intent = Intent (this, RatingActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onMarkerClick(p0: Marker?) = false
