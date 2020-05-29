@@ -59,7 +59,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
     private fun enableLocation() {
         if (checkPermission()) {
             mMap.isMyLocationEnabled = true
-            getCurrentLocation()
+            fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+                if (location != null) {
+                    userLocation = location
+                    binding.locationText.text = "${binding.locationText.text} - ${location.latitude}, ${location.longitude}"
+                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+                }
+            }
         }
         else {
             ActivityCompat.requestPermissions(
@@ -67,29 +74,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                 arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray) {
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
-                enableLocation()
-            }
-        }
-    }
-
-    private fun getCurrentLocation(){
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            if (location != null) {
-                userLocation = location
-                binding.locationText.text = "${binding.locationText.text} - ${location.latitude}, ${location.longitude}"
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                //placeMarkerOnMap(currentLatLng)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
-            }
         }
     }
 
