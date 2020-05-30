@@ -13,12 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import app.prabs.ratespot.databinding.FragmentMainBinding
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MainFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MainFragment : Fragment() {
 
     private val viewModel by viewModels<LoginViewModel>()
@@ -34,21 +28,17 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("Main","onViewCreated")
         listenAuthState()
     }
 
     private fun listenAuthState(){
-        Log.i("Main","listenAuthState")
         viewModel.authenticationState.observe(viewLifecycleOwner,Observer { authenticationState ->
             when(authenticationState){
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    Log.i("Main","Auth")
                     val intent = Intent (activity, MapsActivity::class.java)
                     activity?.startActivity(intent)
                 }
                 else -> {
-                    Log.i("Main","onAuth")
                     findNavController().navigate(R.id.loginFragment)
                 }
             }
