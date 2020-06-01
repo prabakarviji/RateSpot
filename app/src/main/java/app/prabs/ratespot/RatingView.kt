@@ -10,19 +10,44 @@ import kotlin.math.min
 import kotlin.math.sin
 
 private enum class Rating(val value: Int) {
+    EMPTY(R.string.terrible),
     TERRIBLE(R.string.terrible),
     BAD(R.string.bad),
     AVERAGE(R.string.average),
     GOOD(R.string.good),
     EXCELLENT(R.string.excellent);
-}
 
-private const val RADIUS_OFFSET_LABEL = 30
-private const val RADIUS_OFFSET_INDICATOR = -35
+    fun next() = when (this) {
+        EMPTY -> TERRIBLE
+        TERRIBLE -> BAD
+        BAD -> AVERAGE
+        AVERAGE -> GOOD
+        GOOD -> EXCELLENT
+        EXCELLENT -> EMPTY
+    }
+}
 
 class RatingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    init {
+        isClickable = true
+    }
+
+    private var rating = Rating.EMPTY
+
+    override fun performClick(): Boolean {
+        if (super.performClick()) return true
+
+        rating = rating.next()
+        Log.i("###",resources.getString(rating.value))
+        //contentDescription = resources.getString(fanSpeed.label)
+
+        invalidate()
+        return true
+    }
+
     private var rectHeight = 80
     private var fanSpeed = Rating.TERRIBLE
     private val pointPosition: PointF = PointF(0.0f, 0.0f)
@@ -38,20 +63,26 @@ class RatingView @JvmOverloads constructor(
     }
 
     private fun PointF.computeXYForSpeed(pos: Rating) {
-        Log.i("####", pos.ordinal.toString())
-        var rad = width/5
-        x = (pos.ordinal * rad).toFloat()
+        var distance = width/5
+        x = (pos.ordinal * distance).toFloat()
         y = height.toFloat()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paint.color = if (fanSpeed == Rating.TERRIBLE) Color.GRAY else Color.GREEN
-        canvas.drawRoundRect(0f, 0f, width.toFloat (), height.toFloat(), 30F,30F,paint)
-        paint.color = Color.BLACK
+        paint.color = Color.WHITE
+        paint.style = Paint.Style.FILL
+        canvas.drawRoundRect(0f, 0f, width.toFloat (), height.toFloat(),20f,20f,paint)
+        paint.color = Color.GRAY
+        paint.style = Paint.Style.STROKE
+        canvas.drawRoundRect(0f, 0f, width.toFloat (), height.toFloat(),20f,20f,paint)
         for (i in Rating.values()) {
             pointPosition.computeXYForSpeed(i)
-            if(i.ordinal != 0) canvas.drawLine(pointPosition.x, 0f, pointPosition.x, pointPosition.y, paint)
+            if(i.ordinal != 0 && i.ordinal != 5) {
+                paint.color = Color.GRAY
+                canvas.drawLine(pointPosition.x, 0f, pointPosition.x, pointPosition.y, paint)
+
+            }
         }
 
     }
