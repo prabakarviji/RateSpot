@@ -2,8 +2,13 @@
     <string name="app_name">RateSpot</string>
     <string name="rate_spot">Rate Spot</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
     <string name="rating">Rating</string>
+
+    <string name="terrible">0</string>
+    <string name="bad">1</string>
+    <string name="average">2</string>
+    <string name="good">3</string>
+    <string name="excellent">4</string>
 </resources>
