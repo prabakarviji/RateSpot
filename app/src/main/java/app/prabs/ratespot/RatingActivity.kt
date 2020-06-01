@@ -17,8 +17,6 @@ class RatingActivity : AppCompatActivity(), OnRatingBarChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_rating)
-        binding.roadRating.onRatingBarChangeListener = this
-        binding.lightRating.onRatingBarChangeListener = this
     }
 
     override fun onRatingChanged(ratingBar: RatingBar?, rating: Float,fromUser: Boolean) {
