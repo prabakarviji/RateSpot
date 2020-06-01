@@ -6,9 +6,9 @@
     <string name="title_activity_maps">Map</string>
     <string name="rating">Rating</string>
 
-    <string name="terrible">0</string>
-    <string name="bad">1</string>
-    <string name="average">2</string>
-    <string name="good">3</string>
-    <string name="excellent">4</string>
+    <string name="terrible">1</string>
+    <string name="bad">2</string>
+    <string name="average">3</string>
+    <string name="good">4</string>
+    <string name="excellent">5</string>
 </resources>

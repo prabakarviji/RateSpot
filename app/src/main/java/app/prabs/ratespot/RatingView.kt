@@ -3,6 +3,7 @@ package app.prabs.ratespot
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import kotlin.math.cos
 import kotlin.math.min
@@ -22,7 +23,7 @@ private const val RADIUS_OFFSET_INDICATOR = -35
 class RatingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-    private var dim_height = 80
+    private var rectHeight = 80
     private var fanSpeed = Rating.TERRIBLE
     private val pointPosition: PointF = PointF(0.0f, 0.0f)
 
@@ -33,21 +34,25 @@ class RatingView @JvmOverloads constructor(
         typeface = Typeface.create( "", Typeface.BOLD)
     }
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
-        //radius = (min(width, height) / 2.0 * 0.8).toFloat()
-        dim_height = height
+        rectHeight = height
     }
 
-    private fun PointF.computeXYForSpeed(pos: Rating, radius: Float) {
-        // Angles are in radians.
-        val startAngle = Math.PI * (9 / 8.0)
-        val angle = startAngle + pos.ordinal * (Math.PI / 4)
-        x = (radius * cos(angle)).toFloat() + width / 2
-        y = (radius * sin(angle)).toFloat() + height / 2
+    private fun PointF.computeXYForSpeed(pos: Rating) {
+        Log.i("####", pos.ordinal.toString())
+        var rad = width/5
+        x = (pos.ordinal * rad).toFloat()
+        y = height.toFloat()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paint.color = if (fanSpeed == Rating.TERRIBLE) Color.GREEN else Color.GREEN
+        paint.color = if (fanSpeed == Rating.TERRIBLE) Color.GRAY else Color.GREEN
         canvas.drawRoundRect(0f, 0f, width.toFloat (), height.toFloat(), 30F,30F,paint)
+        paint.color = Color.BLACK
+        for (i in Rating.values()) {
+            pointPosition.computeXYForSpeed(i)
+            if(i.ordinal != 0) canvas.drawLine(pointPosition.x, 0f, pointPosition.x, pointPosition.y, paint)
+        }
+
     }
 }
