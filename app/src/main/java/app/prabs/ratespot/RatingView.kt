@@ -4,13 +4,13 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
-import kotlin.math.cos
-import kotlin.math.min
-import kotlin.math.sin
+import android.widget.Toast
+
 
 private enum class Rating(val value: Int) {
-    EMPTY(R.string.terrible),
+    EMPTY(R.string.empty),
     TERRIBLE(R.string.terrible),
     BAD(R.string.bad),
     AVERAGE(R.string.average),
@@ -37,11 +37,26 @@ class RatingView @JvmOverloads constructor(
 
     private var rating = Rating.EMPTY
 
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+
+        super.onTouchEvent(event)
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                return true
+            }
+            MotionEvent.ACTION_UP -> {
+                var position = event.x/(width/5)
+                performClick()
+                return true
+            }
+        }
+        return false
+    }
+
     override fun performClick(): Boolean {
         if (super.performClick()) return true
 
         rating = rating.next()
-        Log.i("###",resources.getString(rating.value))
         //contentDescription = resources.getString(fanSpeed.label)
 
         invalidate()
@@ -72,16 +87,21 @@ class RatingView @JvmOverloads constructor(
         super.onDraw(canvas)
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
-        canvas.drawRoundRect(0f, 0f, width.toFloat (), height.toFloat(),20f,20f,paint)
+        canvas.drawRect(0f, 0f, width.toFloat (), height.toFloat(),paint)
         paint.color = Color.GRAY
         paint.style = Paint.Style.STROKE
-        canvas.drawRoundRect(0f, 0f, width.toFloat (), height.toFloat(),20f,20f,paint)
+        canvas.drawRect(0f, 0f, width.toFloat (), height.toFloat(),paint)
         for (i in Rating.values()) {
             pointPosition.computeXYForSpeed(i)
             if(i.ordinal != 0 && i.ordinal != 5) {
                 paint.color = Color.GRAY
                 canvas.drawLine(pointPosition.x, 0f, pointPosition.x, pointPosition.y, paint)
 
+            }
+            else{
+                paint.color = Color.RED
+                paint.style = Paint.Style.FILL
+                canvas.drawRect(0f, 0f, width/5.toFloat (), height.toFloat(),paint)
             }
         }
 
