@@ -1,9 +1,11 @@
 package app.prabs.ratespot
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import app.prabs.ratespot.databinding.ActivityRatingBinding
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 
@@ -42,12 +44,22 @@ class RatingActivity : AppCompatActivity() {
 
     }
 
+    fun find(num:Int) = when (num) {
+        1 -> "TERRIBLE"
+        2 -> "BAD"
+        3 -> "AVERAGE"
+        4 -> "GOOD"
+        5 -> "EXCELLENT"
+        else -> ""
+    }
+
+    @SuppressLint("SetTextI18n")
     fun setRatingValues(){
-        binding.roadValue.text =  roadValue.toString()
-        binding.lightValue.text = lightValue.toString()
-        binding.sewageValue.text = sewageValue.toString()
+        binding.roadValue.text =  "${find(roadValue.toInt())}  ${roadValue}"
+        binding.lightValue.text = "${find(lightValue.toInt())}  ${lightValue}"
+        binding.sewageValue.text = "${find(sewageValue.toInt())}  ${sewageValue}"
         val overall = (roadValue + lightValue +sewageValue)/3.0
-        binding.overall.text = "Overall rating: ${String.format("%.1f",overall)}"
+        binding.overall.text = "Overall rating: ${find(overall.toInt())}  ${String.format("%.1f",overall)}"
     }
 
 
