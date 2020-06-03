@@ -1,27 +1,27 @@
 package app.prabs.ratespot
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import app.prabs.ratespot.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import app.prabs.ratespot.databinding.ActivityMapsBinding
+import java.util.*
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
 
@@ -62,7 +62,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
             fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
                 if (location != null) {
                     userLocation = location
-                    binding.locationText.text = "${binding.locationText.text} - ${location.latitude}, ${location.longitude}"
+                    binding.locationText.text = findAddress(location.latitude,location.longitude)
                     val currentLatLng = LatLng(location.latitude, location.longitude)
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
                 }
@@ -80,6 +80,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
     private fun navigateToRate(){
         val intent = Intent (this, RatingActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun findAddress(latitude:Double,longitude:Double):String{
+        val addresses: List<Address>
+        val geocode = Geocoder(this, Locale.getDefault())
+        addresses = geocode.getFromLocation(latitude, longitude, 1)
+        return addresses[0].getAddressLine(0)
     }
 
     override fun onMarkerClick(p0: Marker?) = false
