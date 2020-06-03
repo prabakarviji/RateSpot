@@ -79,6 +79,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
     private fun navigateToRate(){
         val intent = Intent (this, RatingActivity::class.java)
+        intent.putExtra("address",binding.locationText.text)
+        intent.putExtra("latitude","${userLocation.latitude}")
+        intent.putExtra("longitude","${userLocation.longitude}")
         startActivity(intent)
     }
 

@@ -5,8 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import app.prabs.ratespot.databinding.ActivityRatingBinding
-import kotlin.math.roundToInt
-import kotlin.math.roundToLong
+
 
 
 class RatingActivity : AppCompatActivity() {
@@ -22,6 +21,7 @@ class RatingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_rating)
+        binding.address.text = intent.getStringExtra("address")
         binding.roadRating.setRatingViewListener(object : RatingView.RatingViewListener {
             override fun setRating(value: Int) {
                 roadValue = value.toFloat()
