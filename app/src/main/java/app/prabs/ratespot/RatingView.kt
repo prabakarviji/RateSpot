@@ -3,7 +3,6 @@ package app.prabs.ratespot
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.withStyledAttributes
@@ -30,7 +29,16 @@ private enum class Rating(val value: Int) {
 
 class RatingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+) : View(context, attrs, defStyleAttr),View.OnClickListener {
+
+    interface RatingViewListener {
+        fun setRating(value: Int)
+    }
+    private var listener: RatingViewListener? = null
+
+    fun setRatingViewListener(listener: RatingViewListener) {
+        this.listener = listener
+    }
 
     init {
         isClickable = true
@@ -43,6 +51,7 @@ class RatingView @JvmOverloads constructor(
         }
     }
 
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
 
         super.onTouchEvent(event)
@@ -54,6 +63,7 @@ class RatingView @JvmOverloads constructor(
                 var position = event.x/(width/5)
                 rating = rating.find(position.toInt())
                 performClick()
+                listener?.setRating(position.toInt()+1)
                 return true
             }
         }
@@ -66,7 +76,7 @@ class RatingView @JvmOverloads constructor(
         return true
     }
 
-    private var rectHeight = 80
+    private var rectHeight = 50
     private var rating = Rating.EMPTY
     private val pointPosition: PointF = PointF(0.0f, 0.0f)
 
@@ -127,5 +137,9 @@ class RatingView @JvmOverloads constructor(
             canvas.drawLine(pointPosition.x, 0f, pointPosition.x, pointPosition.y, paint)
         }
 
+    }
+
+    override fun onClick(p0: View?) {
+        TODO("Not yet implemented")
     }
 }
