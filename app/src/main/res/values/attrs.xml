@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RateView">
+        <attr name="terribleColor" format="color" />
+        <attr name="badColor" format="color" />
+        <attr name="averageColor" format="color" />
+        <attr name="goodColor" format="color" />
+        <attr name="excellentColor" format="color" />
+    </declare-styleable>
+</resources>
