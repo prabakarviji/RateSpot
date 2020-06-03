@@ -68,7 +68,7 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="11dp"
             android:fontFamily="@font/metropolis_bold"
             android:text="Light"
             android:textAlignment="textEnd"
@@ -77,7 +77,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roadRating" />
+            app:layout_constraintTop_toBottomOf="@+id/roadValue" />
 
         <TextView
             android:id="@+id/textView6"
@@ -97,44 +97,44 @@
         <app.prabs.ratespot.RatingView
             android:id="@+id/roadRating"
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="16dp"
-            app:terribleColor="#EF686C"
-            app:badColor="#FF8812"
             app:averageColor="#FFEA21"
-            app:goodColor="#79D033"
+            app:badColor="#FF8812"
             app:excellentColor="#3BB44A"
+            app:goodColor="#79D033"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:terribleColor="#EF686C" />
 
         <app.prabs.ratespot.RatingView
             android:id="@+id/lightRating"
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="16dp"
-            app:terribleColor="#EF686C"
-            app:badColor="#FF8812"
             app:averageColor="#FFEA21"
-            app:goodColor="#79D033"
+            app:badColor="#FF8812"
             app:excellentColor="#3BB44A"
+            app:goodColor="#79D033"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:terribleColor="#EF686C" />
 
         <app.prabs.ratespot.RatingView
             android:id="@+id/sewageRating"
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="16dp"
-            app:terribleColor="#EF686C"
-            app:badColor="#FF8812"
             app:averageColor="#FFEA21"
-            app:goodColor="#79D033"
+            app:badColor="#FF8812"
             app:excellentColor="#3BB44A"
+            app:goodColor="#79D033"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:terribleColor="#EF686C" />
 
         <Button
             android:id="@+id/rateButton"
@@ -171,6 +171,18 @@
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:lineHeight="25dp" />
+
+        <TextView
+            android:id="@+id/roadValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:fontFamily="@font/metropolis"
+            android:text="Good - 4.0"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/roadRating" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
