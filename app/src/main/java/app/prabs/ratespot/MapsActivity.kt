@@ -3,6 +3,7 @@ package app.prabs.ratespot
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -18,6 +19,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import java.util.*
@@ -65,6 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                     binding.locationText.text = findAddress(location.latitude,location.longitude)
                     val currentLatLng = LatLng(location.latitude, location.longitude)
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+                    drawCircle()
                 }
             }
         }
@@ -75,6 +79,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                 REQUEST_LOCATION_PERMISSION
             )
         }
+    }
+
+    private fun drawCircle(){
+        mMap.addCircle(
+            CircleOptions()
+                .center(LatLng(userLocation.latitude, userLocation.longitude))
+                .radius(2000.0)
+                .strokeColor(R.color.colorPrimaryDark)
+                .fillColor(R.color.colorPrimary)
+        )
     }
 
     private fun navigateToRate(){
