@@ -7,13 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import app.prabs.ratespot.databinding.ActivityRatingBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.sql.Timestamp
 
 
 class RatingActivity : AppCompatActivity() {
@@ -27,8 +25,6 @@ class RatingActivity : AppCompatActivity() {
     private  var overall = 0.0
 
     val firestore = Firebase.firestore
-    private lateinit var navController: NavController
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,27 +54,36 @@ class RatingActivity : AppCompatActivity() {
     }
 
     private fun submitRatings(){
-        val rating = hashMapOf(
+        if(roadValue.toInt() != 0 && lightValue.toInt() != 0 && sewageValue.toInt() != 0){
+            processData()
+        }
+        else showToast("Please fill all ratings")
+    }
+
+    private fun processData(){
+        val rating: HashMap<String, Any> = hashMapOf(
             "road" to roadValue,
             "light" to lightValue,
             "sewage" to sewageValue,
             "overall" to overall,
             "address" to intent.getStringExtra("address"),
             "latitude" to intent.getStringExtra("latitude"),
-            "longitude" to  intent.getStringExtra("longitude")
+            "longitude" to intent.getStringExtra("longitude")
         )
+        postToFirebase(rating)
+    }
+
+    private fun postToFirebase(rating: HashMap<String, Any>) {
         firestore.collection("user").
-            document(currentUser.uid).
-            collection("reviews")
+        document(currentUser.uid).
+        collection("reviews")
             .add(rating)
             .addOnSuccessListener { documentReference ->
-                val toast = Toast.makeText(applicationContext, "Submitted Successfully", Toast.LENGTH_SHORT)
-                toast.show()
+                showToast("Submitted Successfully")
                 super.onBackPressed()
             }
             .addOnFailureListener { e ->
-                val toast = Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT)
-                toast.show()
+                e.message?.let { showToast(it) }
             }
     }
 
@@ -89,6 +94,11 @@ class RatingActivity : AppCompatActivity() {
         4 -> "GOOD"
         5 -> "EXCELLENT"
         else -> ""
+    }
+
+    private fun showToast(message:String){
+        val toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     @SuppressLint("SetTextI18n")
