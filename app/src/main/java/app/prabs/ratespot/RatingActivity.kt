@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import app.prabs.ratespot.databinding.ActivityRatingBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -25,6 +27,8 @@ class RatingActivity : AppCompatActivity() {
     private  var overall = 0.0
 
     val firestore = Firebase.firestore
+    private lateinit var navController: NavController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +67,6 @@ class RatingActivity : AppCompatActivity() {
             "latitude" to intent.getStringExtra("latitude"),
             "longitude" to  intent.getStringExtra("longitude")
         )
-        Log.d("####",currentUser.uid)
         firestore.collection("user").
             document(currentUser.uid).
             collection("reviews")
@@ -71,6 +74,7 @@ class RatingActivity : AppCompatActivity() {
             .addOnSuccessListener { documentReference ->
                 val toast = Toast.makeText(applicationContext, "Submitted Successfully", Toast.LENGTH_SHORT)
                 toast.show()
+                super.onBackPressed()
             }
             .addOnFailureListener { e ->
                 val toast = Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT)
