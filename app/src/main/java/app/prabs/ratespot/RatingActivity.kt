@@ -68,7 +68,8 @@ class RatingActivity : AppCompatActivity() {
             "overall" to overall,
             "address" to intent.getStringExtra("address"),
             "latitude" to intent.getStringExtra("latitude"),
-            "longitude" to intent.getStringExtra("longitude")
+            "longitude" to intent.getStringExtra("longitude"),
+            "status" to find(overall.toInt())
         )
         postToFirebase(rating)
     }
