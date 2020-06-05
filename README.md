@@ -25,7 +25,18 @@ The android app build using follwoing concepts:
 
 ## Screenshots
 
-
+<table style="width:100%">
+  <tr>
+    <td><img src="Screenshots/login.png"/></td>
+    <td><img src="Screenshots/map.png"/></td>
+    <td><img src="Screenshots/rating.png"</td>
+  </tr>
+   <tr>
+    <th>Login</th>
+    <th>Location on Map</th>
+    <th>Custom Rating View</th>
+  </tr>
+</table>
 
 ## License
 
