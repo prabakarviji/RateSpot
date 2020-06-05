@@ -122,7 +122,7 @@ class RatingView @JvmOverloads constructor(
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
         canvas.drawRect(0f, 0f, width.toFloat (), height.toFloat(),paint)
-        paint.color = Color.BLACK
+        paint.color = Color.GRAY
         paint.style = Paint.Style.STROKE
         canvas.drawRect(0f, 0f, width.toFloat (), height.toFloat(),paint)
         for (i in Rating.values()) {
@@ -130,10 +130,10 @@ class RatingView @JvmOverloads constructor(
             paint.color = findColor(i)
             paint.style = Paint.Style.FILL
             canvas.drawRect(pointPosition.x, 0f, pointPosition.x+(width/5), pointPosition.y, paint)
-            paint.color = Color.BLACK
+            paint.color = Color.GRAY
             paint.style = Paint.Style.STROKE
             canvas.drawRect(pointPosition.x, 0f, pointPosition.x+(width/5), pointPosition.y, paint)
-            paint.color = if (i == Rating.EMPTY || i == Rating.EXCELLENT) Color.TRANSPARENT else Color.BLACK
+            paint.color = if (i == Rating.EMPTY || i == Rating.EXCELLENT) Color.TRANSPARENT else Color.GRAY
             canvas.drawLine(pointPosition.x, 0f, pointPosition.x, pointPosition.y, paint)
         }
 
@@ -142,4 +142,5 @@ class RatingView @JvmOverloads constructor(
     override fun onClick(p0: View?) {
         TODO("Not yet implemented")
     }
+
 }
