@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RateSpot</string>
     <string name="rate_spot">Rate Spot</string>
 
@@ -12,4 +12,15 @@
     <string name="average">3</string>
     <string name="good">4</string>
     <string name="excellent">5</string>
+    <string name="road">Road</string>
+    <string name="lights">Lights</string>
+    <string name="sewage">Sewage</string>
+    <string name="locationLabel" tools:ignore="ExtraTranslation">(Drag and drop marker to new location)</string>
+    <string name="address">144, Arcot Road, Virugambakkam, Chennai,Tamil Nadu-92</string>
+    <string name="rate_it">Rate it!</string>
+    <string name="getting_your_location">Getting your location..</string>
+    <string name="submit">Submit</string>
+    <string name="initial">0.0</string>
+    <string name="overall">Overall rating: 0.0</string>
+    <string name="checking">Checking…</string>
 </resources>

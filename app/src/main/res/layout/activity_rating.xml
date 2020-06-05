@@ -46,7 +46,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:srcCompat="@drawable/map" />
+            app:srcCompat="@drawable/map"
+            android:contentDescription="@string/title_activity_maps" />
 
         <TextView
             android:id="@+id/textView4"
@@ -54,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/metropolis_bold"
-            android:text="Road"
+            android:text="@string/road"
             android:textAlignment="textEnd"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -70,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/metropolis_bold"
-            android:text="Light"
+            android:text="@string/lights"
             android:textAlignment="textEnd"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -85,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/metropolis_bold"
-            android:text="Sewage"
+            android:text="@string/sewage"
             android:textAlignment="textEnd"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -96,9 +97,7 @@
 
         <app.prabs.ratespot.RatingView
             android:id="@+id/roadRating"
-            android:layout_width="300dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
+            style="@style/barStyle"
             app:averageColor="#FFEA21"
             app:badColor="#FF8812"
             app:excellentColor="#3BB44A"
@@ -110,9 +109,6 @@
 
         <app.prabs.ratespot.RatingView
             android:id="@+id/lightRating"
-            android:layout_width="300dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
             app:averageColor="#FFEA21"
             app:badColor="#FF8812"
             app:excellentColor="#3BB44A"
@@ -120,13 +116,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:terribleColor="#EF686C" />
+            app:terribleColor="#EF686C"
+            style="@style/barStyle" />
 
         <app.prabs.ratespot.RatingView
             android:id="@+id/sewageRating"
-            android:layout_width="300dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
+            style="@style/barStyle"
             app:averageColor="#FFEA21"
             app:badColor="#FF8812"
             app:excellentColor="#3BB44A"
@@ -145,7 +140,7 @@
             android:height="55dp"
             android:background="@color/colorPrimary"
             android:fontFamily="@font/metropolis_bold"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -161,7 +156,7 @@
             android:fontFamily="@font/metropolis_medium"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="144, Arcot Road, Virugambakkam, Chennai,Tamil Nadu-92"
+            android:text="@string/address"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp"
@@ -174,36 +169,24 @@
 
         <TextView
             android:id="@+id/roadValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/metropolis"
-            android:text="0.0"
-            android:textStyle="bold"
+            android:text="@string/initial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roadRating" />
+            app:layout_constraintTop_toBottomOf="@+id/roadRating"
+            style="@style/ratingLabels" />
 
         <TextView
             android:id="@+id/lightValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/metropolis"
-            android:text="0.0"
-            android:textStyle="bold"
+            style="@style/ratingLabels"
+            android:text="@string/initial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lightRating" />
 
         <TextView
             android:id="@+id/sewageValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/metropolis"
-            android:text="0.0"
-            android:textStyle="bold"
+            style="@style/ratingLabels"
+            android:text="@string/initial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sewageRating" />
@@ -214,7 +197,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:fontFamily="@font/metropolis"
-            android:text="Overall rating: 0.0"
+            android:text="@string/overall"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
