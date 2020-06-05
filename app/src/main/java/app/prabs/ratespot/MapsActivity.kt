@@ -171,7 +171,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
     }
 
     private fun animateAndMark(){
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 19f))
         binding.locationText.text = findAddress(currentLatLng.latitude,currentLatLng.longitude)
     }
 
