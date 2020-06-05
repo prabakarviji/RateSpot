@@ -4,7 +4,7 @@
 
 An android application to spot and rate road, street & seweage systems in your nearby location
 
-Built part of learning Koltin with [#30DaysOfKotlin](#30DaysOfKotlin) campaign
+Built part of learning Koltin with [#30DaysOfKotlin](https://eventsonair.withgoogle.com/events/kotlin) campaign
 
 
 ## About
