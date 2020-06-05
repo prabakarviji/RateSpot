@@ -3,7 +3,8 @@ package app.prabs.ratespot
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -33,14 +34,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var userLocation: Location
+    private lateinit var currentLatLng: LatLng
     private lateinit var binding: ActivityMapsBinding
     private  var currentUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
 
 
     private val REQUEST_LOCATION_PERMISSION = 1
 
-
+    private lateinit var currentLocMarker: Marker
     private val db = Firebase.firestore
     private val docRef = db.collection("user").document(currentUser.uid).collection("reviews")
 
@@ -60,6 +61,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         mMap = googleMap
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.setOnMarkerClickListener(this)
+        mMap.setOnMarkerDragListener(object: GoogleMap.OnMarkerDragListener {
+            override fun onMarkerDragEnd(p0: Marker?) {
+                if (p0 != null) {
+                    currentLatLng = LatLng(p0.position.latitude,p0.position.longitude)
+                    currentLocMarker.position = currentLatLng
+                    animateAndMark()
+                }
+            }
+
+            override fun onMarkerDragStart(p0: Marker?) {
+                Log.d("Maker","onMarkerDragStart")
+            }
+
+            override fun onMarkerDrag(p0: Marker?) {
+                Log.d("Maker","onMarkerDrag")
+                //mMap.clear()
+            }
+        })
         plotReviewMarkers()
         enableLocation()
     }
@@ -120,12 +139,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
             mMap.isMyLocationEnabled = true
             fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
                 if (location != null) {
-                    userLocation = location
-                    binding.locationText.text = findAddress(location.latitude,location.longitude)
-                    val currentLatLng = LatLng(location.latitude, location.longitude)
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
-                    drawCircle()
-
+                    currentLatLng = LatLng(location.latitude, location.longitude)
+                    drawCurrentLocationMarker()
                 }
             }
         }
@@ -138,22 +153,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         }
     }
 
-    private fun drawCircle(){
-        mMap.addCircle(
-            CircleOptions()
-                .center(LatLng(userLocation.latitude, userLocation.longitude))
-                .radius(2000.0)
-                .strokeColor(R.color.colorPrimaryDark)
-                .fillColor(R.color.colorPrimary)
-        )
+    private fun drawCurrentLocationMarker(){
+        val height = 150
+        val width = 150
+        val bitMap: BitmapDrawable = resources.getDrawable(R.drawable.marker) as BitmapDrawable
+        val marker: Bitmap = Bitmap.createScaledBitmap(bitMap.bitmap, width, height, false)
 
+        currentLocMarker = mMap.addMarker(
+            MarkerOptions()
+                .position(currentLatLng)
+                .icon(BitmapDescriptorFactory.fromBitmap(marker))
+                .draggable(true)
+                .zIndex(10f)
+                .title("You")
+        )
+        animateAndMark()
+    }
+
+    private fun animateAndMark(){
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+        binding.locationText.text = findAddress(currentLatLng.latitude,currentLatLng.longitude)
     }
 
     private fun navigateToRate(){
         val intent = Intent (this, RatingActivity::class.java)
         intent.putExtra("address",binding.locationText.text)
-        intent.putExtra("latitude","${userLocation.latitude}")
-        intent.putExtra("longitude","${userLocation.longitude}")
+        intent.putExtra("latitude","${currentLatLng.latitude}")
+        intent.putExtra("longitude","${currentLatLng.longitude}")
         startActivity(intent)
     }
 
