@@ -19,7 +19,6 @@ import app.prabs.ratespot.databinding.*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.common.SignInButton
-import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
 
@@ -41,7 +40,6 @@ class LoginFragment : Fragment() {
         )
         binding.authButton.setSize(SignInButton.SIZE_WIDE)
         binding.authButton.setOnClickListener { launchSignInFlow() }
-
         return binding.root
     }
 

@@ -36,12 +36,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var currentLatLng: LatLng
     private lateinit var binding: ActivityMapsBinding
-    private  var currentUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-
+    private lateinit var currentLocMarker: Marker
 
     private val REQUEST_LOCATION_PERMISSION = 1
-
-    private lateinit var currentLocMarker: Marker
+    private var currentUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
     private val db = Firebase.firestore
     private val docRef = db.collection("user").document(currentUser.uid).collection("reviews")
 
@@ -52,7 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         binding.rateButton.setOnClickListener{navigateToRate()}
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+                mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
     }
@@ -69,14 +67,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
                     animateAndMark()
                 }
             }
-
             override fun onMarkerDragStart(p0: Marker?) {
                 Log.d("Maker","onMarkerDragStart")
             }
-
             override fun onMarkerDrag(p0: Marker?) {
                 Log.d("Maker","onMarkerDrag")
-                //mMap.clear()
             }
         })
         plotReviewMarkers()
@@ -106,11 +101,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
             mMap.addMarker(
                 MarkerOptions()
                     .position(LatLng(latitude, longitude))
-                    .title("${address} -- ${status}")
-                    .icon(
-                        BitmapDescriptorFactory
-                            .defaultMarker(markerColor(status))
-                    )
+                    .title("$address -- $status")
+                    .icon(BitmapDescriptorFactory.defaultMarker(markerColor(status)))
             )
         }
 
@@ -147,7 +139,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMarkerC
         else {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )
         }

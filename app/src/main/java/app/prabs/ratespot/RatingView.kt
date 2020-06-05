@@ -7,7 +7,6 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.withStyledAttributes
 
-
 private enum class Rating(val value: Int) {
     EMPTY(R.string.empty),
     TERRIBLE(R.string.terrible),
@@ -60,7 +59,7 @@ class RatingView @JvmOverloads constructor(
                 return true
             }
             MotionEvent.ACTION_UP -> {
-                var position = event.x/(width/5)
+                val position = event.x/(width/5)
                 rating = rating.find(position.toInt())
                 performClick()
                 listener?.setRating(position.toInt()+1)
@@ -97,7 +96,7 @@ class RatingView @JvmOverloads constructor(
     }
 
     private fun PointF.computeXYForSpeed(pos: Rating) {
-        var unitWidth = width/5
+        val unitWidth = width/5
         x = (pos.ordinal * unitWidth).toFloat()
         y = height.toFloat()
     }
