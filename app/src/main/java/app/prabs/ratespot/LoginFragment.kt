@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import app.prabs.ratespot.databinding.*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.common.SignInButton
 
 class LoginFragment : Fragment() {
 
@@ -38,9 +38,8 @@ class LoginFragment : Fragment() {
         val binding = DataBindingUtil.inflate<FragmentLoginBinding>(
             inflater, R.layout.fragment_login, container, false
         )
-
+        binding.authButton.setSize(SignInButton.SIZE_WIDE)
         binding.authButton.setOnClickListener { launchSignInFlow() }
-
         return binding.root
     }
 

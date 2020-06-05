@@ -2,11 +2,9 @@ package app.prabs.ratespot
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
 import app.prabs.ratespot.databinding.ActivityRatingBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,7 +22,7 @@ class RatingActivity : AppCompatActivity() {
     private  var sewageValue = 0.0f
     private  var overall = 0.0
 
-    val firestore = Firebase.firestore
+    private val fireStore = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +73,11 @@ class RatingActivity : AppCompatActivity() {
     }
 
     private fun postToFirebase(rating: HashMap<String, Any>) {
-        firestore.collection("user").
+        fireStore.collection("user").
         document(currentUser.uid).
         collection("reviews")
             .add(rating)
-            .addOnSuccessListener { documentReference ->
+            .addOnSuccessListener {
                 showToast("Submitted Successfully")
                 super.onBackPressed()
             }
@@ -104,9 +102,9 @@ class RatingActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun setRatingValues(){
-        binding.roadValue.text =  "${find(roadValue.toInt())}  ${roadValue}"
-        binding.lightValue.text = "${find(lightValue.toInt())}  ${lightValue}"
-        binding.sewageValue.text = "${find(sewageValue.toInt())}  ${sewageValue}"
+        binding.roadValue.text =  "${find(roadValue.toInt())}  $roadValue"
+        binding.lightValue.text = "${find(lightValue.toInt())}  $lightValue"
+        binding.sewageValue.text = "${find(sewageValue.toInt())}  $sewageValue"
         overall = (roadValue + lightValue +sewageValue)/3.0
         binding.overall.text = "Overall rating: ${find(overall.toInt())}  ${String.format("%.1f",overall)}"
     }
